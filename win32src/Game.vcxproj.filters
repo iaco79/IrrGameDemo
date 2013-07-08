@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Demo">
+      <UniqueIdentifier>{7bf80f10-a131-49fc-a6e1-63c35daeae27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo\RocketInterface">
+      <UniqueIdentifier>{ee9137a0-a23d-433e-9ca6-b5e5836051d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo\Audio">
+      <UniqueIdentifier>{8001878c-459c-4487-a458-06b89f414e0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Demo\Materials">
+      <UniqueIdentifier>{cec7d047-2d6a-4fa9-95b4-5df1367fabf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlatformWin">
+      <UniqueIdentifier>{0b9817bc-6611-43c5-acd2-780553781ba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="PlatformAndroid">
+      <UniqueIdentifier>{c842997f-9147-4af9-8fde-2f9146dd9d1d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\jni\Demo\BatchedSpriteNode.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\Box2dTest.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\FireworkNode.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\GameObject.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\Player.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\SpriteNode.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\RocketInterface\CIrrRocketEventReceiver.cpp">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\RocketInterface\CIrrRocketGUI.cpp">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\RocketInterface\IrrRocketFileInterface.cpp">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\RocketInterface\IrrRocketInterface.cpp">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\RocketInterface\IrrRocketRenderer.cpp">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\Audio\AudioManager.cpp">
+      <Filter>Demo\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>PlatformWin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\android-activity.cpp">
+      <Filter>PlatformAndroid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\android-receiver.cpp">
+      <Filter>PlatformAndroid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\app-android.cpp">
+      <Filter>PlatformAndroid</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\B2dNode.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\jni\Demo\Base2dNode.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\jni\Demo\BatchedSpriteNode.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\Box2dTest.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\FireworkNode.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\GameObject.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\Player.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\SpriteNode.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\RocketInterface\CIrrRocketEventReceiver.h">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\RocketInterface\IrrRocketFileInterface.h">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\RocketInterface\IrrRocketInterface.h">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\RocketInterface\IrrRocketRenderer.h">
+      <Filter>Demo\RocketInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\Audio\AudioManager.h">
+      <Filter>Demo\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\B2dNode.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\Base2dNode.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\jni\Demo\Materials\FireworkMaterial.h">
+      <Filter>Demo\Materials</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuildStep Include="..\jni\Demo\RocketInterface\CIrrRocketGUI.h">
+      <Filter>Demo\RocketInterface</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\jni\android-logger.h">
+      <Filter>PlatformAndroid</Filter>
+    </CustomBuildStep>
+    <CustomBuildStep Include="..\jni\android-receiver.h">
+      <Filter>PlatformAndroid</Filter>
+    </CustomBuildStep>
+  </ItemGroup>
+</Project>

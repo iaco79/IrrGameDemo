@@ -1,0 +1,9 @@
+﻿Build started 08/07/2013 02:00:35 a.m..
+     1>Project "Z:\develop\blog\gameprog\gamedemo\trunk\trunk\jni\libvorbis-1.3.3\win32\VS2010\libvorbis\libvorbis_static.vcxproj" on node 3 (clean target(s)).
+     1>_PrepareForClean:
+         Deleting file "Win32\jni\obj\liboggdebug\libvorbis_static.lastbuildstate".
+     1>Done Building Project "Z:\develop\blog\gameprog\gamedemo\trunk\trunk\jni\libvorbis-1.3.3\win32\VS2010\libvorbis\libvorbis_static.vcxproj" (clean target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.01

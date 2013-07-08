@@ -1,0 +1,23 @@
+-- IAco79 game demo with opensource libraries --
+
+
+* Android build steps;
+
+1- Build gamedemo.so in win32 with cygwin:
+
+ bash            
+ export NDK_MODULE_PATH=./jni  
+ ndk-build
+
+
+2- Build android app
+ ant debug
+
+3- Install the APK and copy the folder GameDemo to your device
+
+
+* Win32 Build step
+
+1- Open GameDemo10.0.sln 
+2- Build debug configuration
+

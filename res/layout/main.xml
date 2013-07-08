@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+   <TableLayout 
+    android:id="@+id/buttonContainer"
+    android:orientation="horizontal"     
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" 
+    android:stretchColumns="0,1,2">
+ 	
+     <TableRow
+         android:layout_width="fill_parent"
+    	 android:layout_height="wrap_content" 
+         >            
+    <Button
+    android:id="@+id/btnReset"
+    android:layout_width="fill_parent"    
+    android:layout_height="wrap_content"    
+    android:text="Reset"
+    style="@style/MyCustomButton"
+    android:onClick="OnButtonClick" />
+     />
+  	<Button
+    android:id="@+id/btnFigure"
+    android:layout_width="fill_parent"    
+    android:layout_height="wrap_content"
+    android:text="Ball"
+    style="@style/MyCustomButton"
+    android:onClick="OnButtonClick" />
+    
+  	<Button
+    android:id="@+id/btnQuit"
+    android:layout_width="wrap_content"    
+    android:layout_height="wrap_content"
+    android:text="Quit"    
+    style="@style/MyCustomButton"
+    android:onClick="OnButtonClick" />
+  	</TableRow>
+  </TableLayout>
+  <FrameLayout
+  android:id="@+id/framelay"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+     <com.iaco.gamedemo.IrrlichtGLView
+     android:id="@+id/RTSurfaceView"
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:visibility= "visible" 
+     />         
+     
+   </FrameLayout> 
+   
+</LinearLayout>
+
