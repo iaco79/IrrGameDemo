@@ -99,7 +99,8 @@
     </Link>
     <PostBuildEvent>
       <Command>copy $(SolutionDir)\libs\*.dll  $(OutDir)
-copy $(SolutionDir)\GameDemo\*.*  $(OutDir)\IrrlichtSdcard</Command>
+md $(OutDir)\IrrlichtSdcard
+copy $(SolutionDir)\GameDemo\*.*  $(OutDir)\IrrlichtSdcard\</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
