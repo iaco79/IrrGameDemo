@@ -17,7 +17,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
-  Othon Insauste iaco79@gmail.com
+  Othon Insauste (othonic@gmail.com)
 */
 #include <windows.h>
 #include <new>
