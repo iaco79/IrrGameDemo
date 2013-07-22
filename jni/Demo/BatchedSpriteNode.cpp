@@ -67,74 +67,77 @@ void BatchedSpriteNode::render()
 		
 			GameObject& go = (*mGameObjects)[j];
 
-			f32 bpx=(float)go.mBody->GetPosition().x;
-			f32 bpy=(float)go.mBody->GetPosition().y;
-			f32 width2 = go.mWidth /2.0f;
-			f32 height2= go.mHeight/2.0f;
-			f32 scale = go.mScale;
-			f32 anglez = go.mBody->GetAngle(); 
+			if(go.mVisible)
+			{
+
+				f32 bpx=(float)go.mBody->GetPosition().x;
+				f32 bpy=(float)go.mBody->GetPosition().y;
+				f32 width2 = go.mWidth /2.0f;
+				f32 height2= go.mHeight/2.0f;
+				f32 scale = go.mScale;
+				f32 anglez = go.mBody->GetAngle(); 
 
 			
-			//int frame=go.mSpriteFrame;
+				//int frame=go.mSpriteFrame;
 
-			vector3df p11= vector3df( width2, height2,0.0f);
-			vector3df p12= vector3df(-width2, height2,0.0f);
-			vector3df p21= vector3df(-width2,-height2,0.0f);
-			vector3df p22= vector3df( width2,-height2,0.0f);
+				vector3df p11= vector3df( width2, height2,0.0f);
+				vector3df p12= vector3df(-width2, height2,0.0f);
+				vector3df p21= vector3df(-width2,-height2,0.0f);
+				vector3df p22= vector3df( width2,-height2,0.0f);
 	 
 
-			core::matrix4 trasmat;
-			trasmat.buildTextureTransform( anglez,
-										core::vector2df(0.0f,0.0f),
-										core::vector2df(bpx,bpy),
-										core::vector2df(scale,scale));
+				core::matrix4 trasmat;
+				trasmat.buildTextureTransform( anglez,
+											core::vector2df(0.0f,0.0f),
+											core::vector2df(bpx,bpy),
+											core::vector2df(scale,scale));
 
 
-			trasmat.transformVect(p11);
-			trasmat.transformVect(p12);
-			trasmat.transformVect(p21);
-			trasmat.transformVect(p22);
+				trasmat.transformVect(p11);
+				trasmat.transformVect(p12);
+				trasmat.transformVect(p21);
+				trasmat.transformVect(p22);
 
-					//clr = SColor(255,50+(quadCount%20)*10,50,250-(quadCount%10)*20);
+						//clr = SColor(255,50+(quadCount%20)*10,50,250-(quadCount%10)*20);
 
 					
-		   Vertices[a+0] = S3DVertex(p11.X,p11.Y,0,0,0,0,clr,0,1);							
-		   Vertices[a+1] = S3DVertex(p12.X,p12.Y,0,0,0,0,clr,1,1);
-		   Vertices[a+2] = S3DVertex(p21.X,p21.Y,0,0,0,0,clr,1,0);
-		   Vertices[a+3] = S3DVertex(p22.X,p22.Y,0,0,0,0,clr,0,0);
+			   Vertices[a+0] = S3DVertex(p11.X,p11.Y,0,0,0,0,clr,0,1);							
+			   Vertices[a+1] = S3DVertex(p12.X,p12.Y,0,0,0,0,clr,1,1);
+			   Vertices[a+2] = S3DVertex(p21.X,p21.Y,0,0,0,0,clr,1,0);
+			   Vertices[a+3] = S3DVertex(p22.X,p22.Y,0,0,0,0,clr,0,0);
 					   
-		   float x =  go.mTextX0  / textureSize.Width;
-		   float y =  go.mTextY0  / textureSize.Height;
-		   float x2 = go.mTextX1  / textureSize.Width;
-		   float y2 = go.mTextY1  / textureSize.Height;
+			   float x =  go.mTextX0  / textureSize.Width;
+			   float y =  go.mTextY0  / textureSize.Height;
+			   float x2 = go.mTextX1  / textureSize.Width;
+			   float y2 = go.mTextY1  / textureSize.Height;
 		   
-		   float fWidth  =  x2-x;
-		   float fHeight =  y2-y;
+			   float fWidth  =  x2-x;
+			   float fHeight =  y2-y;
 
-		   Vertices[a+0].TCoords.X = x+fWidth;
-		   Vertices[a+0].TCoords.Y = y;
+			   Vertices[a+0].TCoords.X = x+fWidth;
+			   Vertices[a+0].TCoords.Y = y;
 
-		   Vertices[a+1].TCoords.X = x;
-		   Vertices[a+1].TCoords.Y = y;
+			   Vertices[a+1].TCoords.X = x;
+			   Vertices[a+1].TCoords.Y = y;
 
-		   Vertices[a+2].TCoords.X = x;
-		   Vertices[a+2].TCoords.Y = y+fHeight;
+			   Vertices[a+2].TCoords.X = x;
+			   Vertices[a+2].TCoords.Y = y+fHeight;
 
-		   Vertices[a+3].TCoords.X = x+fWidth;
-		   Vertices[a+3].TCoords.Y = y+fHeight;
+			   Vertices[a+3].TCoords.X = x+fWidth;
+			   Vertices[a+3].TCoords.Y = y+fHeight;
                    
-		   Indices[q+0] = a+0;
-		   Indices[q+1] = a+3;
-		   Indices[q+2] = a+1;
+			   Indices[q+0] = a+0;
+			   Indices[q+1] = a+3;
+			   Indices[q+2] = a+1;
 
-		   Indices[q+3] = a+1;
-		   Indices[q+4] = a+3;
-		   Indices[q+5] = a+2;
-		   a+=4;
-		   q+=6;
+			   Indices[q+3] = a+1;
+			   Indices[q+4] = a+3;
+			   Indices[q+5] = a+2;
+			   a+=4;
+			   q+=6;
 
-		   quadCount++;
-		
+			   quadCount++;
+			}
 	
 		}
 	}		

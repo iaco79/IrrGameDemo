@@ -17,7 +17,7 @@
      misrepresented as being the original software.
   3. This notice may not be removed or altered from any source distribution.
 
-  Othon Insauste (othonic@gmail.com)
+  Othon Insauste iaco79@gmail.com
 */
 #include <windows.h>
 #include <new>
@@ -46,6 +46,7 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
+#include "Materials/ClearMaterial.h"
 #include "Materials/FireworkMaterial.h"
 
 #ifdef _IRR_WINDOWS_
@@ -58,6 +59,7 @@ using namespace gui;
 Box2dTest test;
 IrrlichtDevice* device = 0;
 s32  FireWorkShaderCallBack::gFireWorkMaterialType=0;
+s32  ClearMaterialCallBack::gClearMaterialType=0;
 bool useWhite;
 
 #define PARTICLE_POOL_SIZE 10
@@ -265,11 +267,44 @@ int main()
 	if (gpu)
 	{	
 		FireWorkShaderCallBack::Initialize(device,GetGlobalNodeElapsedTime);
-	}
+		ClearMaterialCallBack::Initialize(device);
 
+	}
 
 	ICameraSceneNode* activeCamera = smgr->addCameraSceneNode(0, vector3df(0,-2,-7), vector3df(0,0,0));
 
+
+	//Create a render target (FBO) with plain orthogonal projection
+	//we will do the motion blur effect within this fbo
+	//and then render it as a plain texture
+	irr::scene::ICameraSceneNode* target1Camera  = NULL;
+	video::ITexture* renderTarget1 = 0;
+	if (driver->queryFeature(video::EVDF_RENDER_TO_TARGET))
+	{
+		renderTarget1 = driver->addRenderTargetTexture(core::dimension2d<u32>(RENDER_TARGET1_SIZE,RENDER_TARGET1_SIZE), "RTT1", ECF_A8R8G8B8);
+		target1Camera = device->getSceneManager()->addCameraSceneNode(
+						0, 
+						irr::core::vector3df(0.0f, 
+											 0.0f, 
+										    -2.0f),
+						irr::core::vector3df(0.0f, 
+											 0.0f, 
+											 0.0f),
+						 -1,
+						false);
+		irr::core::matrix4 mat;
+				mat.buildProjectionMatrixOrthoLH(
+					10.0f, 
+					10.0f,
+					-0.1f,10.0f);
+				target1Camera->setProjectionMatrix(mat,true);
+							
+
+	}
+	else
+	{
+		return 0;
+	}
 
 	//setup world simulation
 	test.Initialize(smgr);
@@ -282,9 +317,6 @@ int main()
 	//Setup firework node
 	FireworkNode::InitialzeVBO(64,64,smgr);
 
-	// create render target
-	video::ITexture* renderTarget1 = 0;
-	irr::scene::ICameraSceneNode* target1Camera  = NULL;
 	
 	SColor rtColors[4];
 	rtColors[0]=SColor(255,255,255,255);
@@ -332,6 +364,7 @@ int main()
 	batchedNode->Load("IrrlichtSdcard/figures.tga",128,128);	
 	
 
+	
 	//Create skybox
 	driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
     skybox=smgr->addSkyBoxSceneNode(
@@ -348,10 +381,33 @@ int main()
     {
         skybox->addAnimator(anim);
 	}
+	skybox->setVisible(true);
 	
 
 	test.SetGamePlayMode(Box2dTest::GPM_BREAKOUT);
 
+	particleID++;
+
+
+	//Create an sprite node using the offscreen render target as its texture
+	SpriteNode* blurNode= new SpriteNode(smgr->getRootSceneNode(), smgr,particleID);
+	blurNode->LoadFromTexture(renderTarget1,RENDER_TARGET1_SIZE,
+											RENDER_TARGET1_SIZE,10.0f,10.0f);
+	blurNode->setMaterialType((video::E_MATERIAL_TYPE)ClearMaterialCallBack::gClearMaterialType);
+	blurNode->setTransparent(true);
+	blurNode->setPosition(vector3df(0.0f,0.0f,-0.1f));
+	
+	particleID++;
+
+	//transparent dark texture to apply each frame over the offscreen render target 
+	//to create the blur effect
+ 	SpriteNode* darkNode = new SpriteNode(smgr->getRootSceneNode(), smgr,particleID);
+    darkNode->Load("IrrlichtSdcard/cleartexture.tga",128,128,10.0f,10.0f);
+	darkNode->setMaterialType((video::E_MATERIAL_TYPE)ClearMaterialCallBack::gClearMaterialType);
+	darkNode->setPosition(vector3df(0.0f,0.0f,-0.5f));
+    darkNode->setFrame(0);
+
+	bool renderFirstTime = true;
 	while(device->run())
 	{
 
@@ -400,8 +456,8 @@ int main()
 					if(particleIds[i]==0)
 					{
 						particleID++;
-						FireworkNode* fireWorkNode = new FireworkNode(smgr->getRootSceneNode(), smgr,particleID,startTime,0.2f);						
-						fireWorkNode->setMaterialType((video::E_MATERIAL_TYPE)FireWorkShaderCallBack::gFireWorkMaterialType);					
+						FireworkNode* fireWorkNode = new FireworkNode(smgr->getRootSceneNode(), smgr,particleID,startTime,0.2f);
+						fireWorkNode->setMaterialType((video::E_MATERIAL_TYPE)FireWorkShaderCallBack::gFireWorkMaterialType);
 						fireWorkNode->setPosition(vector3df(
 							test.mCacheData[j].cachedCenter.x,
 							test.mCacheData[j].cachedCenter.y,
@@ -419,17 +475,45 @@ int main()
 		audiomgr->update();
 
 
+		//Begin rendering the scen
+		driver->beginScene(false, true, SColor(255,0,0,0));
+		
 
-		
-		
-		driver->beginScene(true, true, SColor(255,0,0,0));
-		
+		//render to the fbo apply motion blur to the balls
+		if (renderTarget1)
+		{
+
+			//make invisible all objects excluding the ball & paddle
+			for(int i=0;i<test.mGameObjects.size();i++)
+			{
+				test.mGameObjects[i].mVisible =  (test.mGameObjects[i].mUserData->m_shapeType == 0);
+			}
+
+			//Start drawing to the offscreen buffer 
+			driver->setRenderTarget(renderTarget1, renderFirstTime, false, video::SColor(0,0,0,0));
+			darkNode->setVisible(true);
+			target1Camera->render();
+			darkNode->render();
+			batchedNode->render();
+
+			//Switch back to the screen buffer
+			driver->setRenderTarget(0, true, true, 0);		
+
+		}
+			
+
+		darkNode->setVisible(false);
+		//make visible all objects again 
+		for(int i=0;i<test.mGameObjects.size();i++)
+		{
+				test.mGameObjects[i].mVisible = true;
+		}
+
 		smgr->setActiveCamera(activeCamera);		
 		smgr->drawAll();
-
 		float score=  test.player.getScore();
 		rocketGUI.SetScore((int)(score*100));
-		rocketGUI.SetWave(lastFPS);
+		rocketGUI.SetWave(-1);
 		rocketGUI.run();
 
 		int fps = driver->getFPS();
@@ -441,7 +525,7 @@ int main()
 
 		
 		driver->endScene();
-		
+		//End rendering the scene
 
 		//LOCK 60fps in win32
 		u32 timeTaken = device->getTimer()->getRealTime()-startTime;
@@ -449,6 +533,8 @@ int main()
 		{
 			device->sleep(timeStep - timeTaken);
 		}
+
+		renderFirstTime = false;
 	}
 
 	device->drop();

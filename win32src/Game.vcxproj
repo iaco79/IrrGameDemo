@@ -196,6 +196,7 @@ copy $(SolutionDir)\GameDemo\*.*  $(OutDir)\IrrlichtSdcard\</Command>
     <ClInclude Include="..\jni\Demo\Box2dTest.h" />
     <ClInclude Include="..\jni\Demo\FireworkNode.h" />
     <ClInclude Include="..\jni\Demo\GameObject.h" />
+    <ClInclude Include="..\jni\Demo\Materials\ClearMaterial.h" />
     <ClInclude Include="..\jni\Demo\Materials\FireworkMaterial.h" />
     <ClInclude Include="..\jni\Demo\Player.h" />
     <ClInclude Include="..\jni\Demo\SpriteNode.h" />
